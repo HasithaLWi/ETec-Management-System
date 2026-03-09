@@ -1,7 +1,7 @@
 package lk.ijse.etecmanagementsystem.dto.tm;
 
 
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
+import lk.ijse.etecmanagementsystem.dto.ProductCondition;
 
 public class RepairPartTM {
 

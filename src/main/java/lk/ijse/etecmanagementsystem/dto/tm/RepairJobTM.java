@@ -1,7 +1,7 @@
 package lk.ijse.etecmanagementsystem.dto.tm;
 
 import lk.ijse.etecmanagementsystem.dto.RepairJobDTO;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
+import lk.ijse.etecmanagementsystem.dto.RepairStatus;
 import java.text.SimpleDateFormat;
 
 public class RepairJobTM {

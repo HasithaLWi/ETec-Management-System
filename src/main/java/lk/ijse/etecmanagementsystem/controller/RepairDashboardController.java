@@ -24,8 +24,8 @@ import lk.ijse.etecmanagementsystem.dto.CustomerDTO;
 import lk.ijse.etecmanagementsystem.dto.RepairJobDTO;
 import lk.ijse.etecmanagementsystem.dto.tm.RepairJobTM;
 import lk.ijse.etecmanagementsystem.dto.tm.RepairPartTM;
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
+import lk.ijse.etecmanagementsystem.dto.ProductCondition;
+import lk.ijse.etecmanagementsystem.dto.RepairStatus;
 
 import java.io.IOException;
 import java.sql.SQLException;

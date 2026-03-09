@@ -17,14 +17,10 @@ import javafx.stage.Stage;
 import lk.ijse.etecmanagementsystem.App;
 import lk.ijse.etecmanagementsystem.bo.BOFactory;
 import lk.ijse.etecmanagementsystem.bo.custom.InventoryBO;
-import lk.ijse.etecmanagementsystem.bo.custom.impl.InventoryBOImpl;
-import lk.ijse.etecmanagementsystem.dao.custom.impl.ProductDAOImpl;
-import lk.ijse.etecmanagementsystem.dao.custom.impl.ProductItemDAOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.QueryDAOImpl;
-import lk.ijse.etecmanagementsystem.dao.custom.impl.SupplierDAOImpl;
 import lk.ijse.etecmanagementsystem.dto.ProductDTO;
 import lk.ijse.etecmanagementsystem.dto.ProductItemDTO;
-import lk.ijse.etecmanagementsystem.server.BarcodeServer;
+import lk.ijse.etecmanagementsystem.util.barcodescanner.BarcodeServer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

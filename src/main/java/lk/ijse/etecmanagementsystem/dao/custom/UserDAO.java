@@ -1,20 +1,16 @@
 package lk.ijse.etecmanagementsystem.dao.custom;
 
+import lk.ijse.etecmanagementsystem.dao.CrudDAO;
+import lk.ijse.etecmanagementsystem.dao.CrudUtil;
 import lk.ijse.etecmanagementsystem.dto.UserDTO;
+import lk.ijse.etecmanagementsystem.entity.User;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public interface UserDAO {
-    List<UserDTO> getAllUsers() throws SQLException;
-
-    UserDTO getUserById(int id) throws SQLException;
-
-    boolean saveUser(UserDTO user) throws SQLException;
-
-    boolean updateUser(UserDTO user) throws SQLException;
-
-    boolean deleteUser(int id) throws SQLException;
+public interface UserDAO extends CrudDAO<User> {
 
     boolean validateCredentials(String username, String password) throws SQLException;
 

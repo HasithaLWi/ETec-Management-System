@@ -1,20 +1,16 @@
 package lk.ijse.etecmanagementsystem.bo.custom.impl;
 
 import lk.ijse.etecmanagementsystem.bo.custom.InventoryBO;
-import lk.ijse.etecmanagementsystem.dao.custom.ProductItemDAO;
-import lk.ijse.etecmanagementsystem.dao.custom.QueryDAO;
-import lk.ijse.etecmanagementsystem.dao.custom.impl.ProductDAOImpl;
-import lk.ijse.etecmanagementsystem.dao.custom.impl.ProductItemDAOImpl;
-import lk.ijse.etecmanagementsystem.dao.custom.impl.QueryDAOImpl;
-import lk.ijse.etecmanagementsystem.dao.custom.impl.SupplierDAOImpl;
+import lk.ijse.etecmanagementsystem.dao.DAOFactory;
+import lk.ijse.etecmanagementsystem.dao.custom.*;
 import lk.ijse.etecmanagementsystem.db.DBConnection;
 import lk.ijse.etecmanagementsystem.dto.*;
 import lk.ijse.etecmanagementsystem.entity.Product;
 import lk.ijse.etecmanagementsystem.entity.ProductItem;
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
+import lk.ijse.etecmanagementsystem.entity.Supplier;
+import lk.ijse.etecmanagementsystem.dto.ProductCondition;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 public class InventoryBOImpl implements InventoryBO {
-    ProductDAOImpl productDAO = new ProductDAOImpl();
-    ProductItemDAO productItemDAO = new ProductItemDAOImpl();
-    SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
-    QueryDAO queryDAO = new QueryDAOImpl();
+    ProductItemDAO productItemDAO = (ProductItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT_ITEM);
+    SupplierDAO supplierDAO = (SupplierDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SUPPLIER);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
+    ProductDAO productDAO = (ProductDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT);
 
     @Override
     public int saveProductAndGetId(ProductDTO p) throws SQLException {
@@ -321,9 +317,9 @@ public class InventoryBOImpl implements InventoryBO {
     public Map<Integer, String> getAllSuppliersMap() throws SQLException {
 
         Map<Integer, String> map = new HashMap<>();
-        List<SupplierDTO> suppliers = supplierDAO.getAllSuppliers();
-        for (SupplierDTO sup : suppliers) {
-            map.put(sup.getSupplierId(), sup.getSupplierName());
+        List<Supplier> suppliers = supplierDAO.getAll();
+        for (Supplier sup : suppliers) {
+            map.put(sup.getSupplier_id(), sup.getSupplier_name());
         }
         return map;
 

@@ -7,8 +7,8 @@ import lk.ijse.etecmanagementsystem.bo.BOFactory;
 import lk.ijse.etecmanagementsystem.bo.custom.InventoryBO;
 import lk.ijse.etecmanagementsystem.bo.custom.SalesBO;
 import lk.ijse.etecmanagementsystem.dao.CrudUtil;
-import lk.ijse.etecmanagementsystem.dao.custom.QueryDAO;
-import lk.ijse.etecmanagementsystem.dao.custom.SalesDAO;
+import lk.ijse.etecmanagementsystem.dao.DAOFactory;
+import lk.ijse.etecmanagementsystem.dao.custom.*;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.*;
 import lk.ijse.etecmanagementsystem.dto.CustomDTO;
 import lk.ijse.etecmanagementsystem.entity.ProductItem;
@@ -29,12 +29,12 @@ import java.util.List;
 
 public class SalesBOImpl implements SalesBO {
 
-    ProductItemDAOImpl productItemDAO = new ProductItemDAOImpl();
-    ProductDAOImpl productDAO = new ProductDAOImpl();
-    SalesItemDAOImpl salesItemDAO = new SalesItemDAOImpl();
-    TransactionRecordDAOImpl transactionRecordDAO = new TransactionRecordDAOImpl();
-    QueryDAO queryDAO = new QueryDAOImpl();
-    SalesDAOImpl salesDAO = new SalesDAOImpl();
+    SalesItemDAO salesItemDAO = (SalesItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SALES_ITEM);
+    ProductItemDAO productItemDAO = (ProductItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT_ITEM);
+    SalesDAO salesDAO = (SalesDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SALES);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
+    TransactionRecordDAO transactionRecordDAO = (TransactionRecordDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.TRANSACTION_RECORD);
+    ProductDAO productDAO = (ProductDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT);
 
     public boolean placeOrder(SalesDTO salesDTO, List<ItemCartTM> cartItems) throws SQLException {
         Connection con = null;
@@ -138,7 +138,7 @@ public class SalesBOImpl implements SalesBO {
                         item.getUnitPrice(),
                         item.getDiscount()
                 );
-                boolean isSalesItemSaved = salesItemDAO.createSalesItem(salesItem);
+                boolean isSalesItemSaved = salesItemDAO.save(salesItem);
                 if (!isSalesItemSaved) {
                     con.rollback();
                     new Alert(Alert.AlertType.ERROR, "Transaction Failed: Unable to save sales item details.").show();
@@ -186,7 +186,7 @@ public class SalesBOImpl implements SalesBO {
                     "Sale #" + saleId
             );
 
-            boolean isTransSaved = transactionRecordDAO.insertTransactionRecord(transactionRecord);
+            boolean isTransSaved = transactionRecordDAO.save(transactionRecord);
 
 
             if (!isTransSaved) {

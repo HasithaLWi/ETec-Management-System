@@ -7,10 +7,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.etecmanagementsystem.bo.BOFactory;
+import lk.ijse.etecmanagementsystem.bo.custom.SupplierBO;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.SupplierDAOImpl;
 import lk.ijse.etecmanagementsystem.dto.SupplierDTO;
+import lk.ijse.etecmanagementsystem.entity.Supplier;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,6 +63,9 @@ public class SuppliersController {
     private final SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
     private final ObservableList<SupplierDTO> suppliersObservableList = FXCollections.observableArrayList();
 
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SUPPLIER);
+
+
     @FXML
     public void initialize() {
         setCellValueFactories();
@@ -96,7 +103,7 @@ public class SuppliersController {
                     txtAddress.getText().trim()
             );
 
-            boolean isSaved = supplierDAO.saveSuppliers(supplier);
+            boolean isSaved = supplierBO.saveSuppliers(supplier);
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Supplier Saved Successfully!").show();
                 handleReset();
@@ -126,7 +133,7 @@ public class SuppliersController {
                     txtAddress.getText()
             );
 
-            boolean isUpdated = supplierDAO.updateSuppliers(supplier);
+            boolean isUpdated = supplierBO.updateSuppliers(supplier);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Supplier Updated Successfully!").show();
                 handleReset();
@@ -153,7 +160,7 @@ public class SuppliersController {
         if (result.isPresent() && result.get() == ButtonType.YES) {
             try {
                 int id = Integer.parseInt(txtId.getText().trim());
-                boolean isDeleted = supplierDAO.deleteSuppliers(id);
+                boolean isDeleted = supplierBO.deleteSuppliers(id);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Supplier Deleted Successfully!").show();
                     handleReset();
@@ -186,7 +193,7 @@ public class SuppliersController {
             try {
                 int sID = Integer.parseInt(idText);
 
-                SupplierDTO s = supplierDAO.getSupplierById(sID);
+                SupplierDTO s = supplierBO.getSupplierById(sID);
 
                 if (s != null) {
                     populateFields(s);
@@ -294,11 +301,11 @@ public class SuppliersController {
 
     private void loadProducts() {
         try {
-            List<SupplierDTO> rawData = supplierDAO.getAllSuppliers();
+
+            List<SupplierDTO> rawData = supplierBO.getAllSuppliers();
+
             suppliersObservableList.clear(); // Always clear before adding
-            if (rawData != null) {
-                suppliersObservableList.addAll(rawData);
-            }
+            suppliersObservableList.addAll(rawData);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Error loading Suppliers: " + e.getMessage()).show();
         }

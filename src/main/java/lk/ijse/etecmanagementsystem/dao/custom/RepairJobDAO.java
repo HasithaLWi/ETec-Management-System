@@ -2,16 +2,11 @@ package lk.ijse.etecmanagementsystem.dao.custom;
 
 import javafx.scene.chart.XYChart;
 import lk.ijse.etecmanagementsystem.dao.CrudDAO;
-import lk.ijse.etecmanagementsystem.dao.CrudUtil;
-import lk.ijse.etecmanagementsystem.dto.RepairJobDTO;
 import lk.ijse.etecmanagementsystem.entity.RepairJob;
-import lk.ijse.etecmanagementsystem.util.GenerateReports;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
+import lk.ijse.etecmanagementsystem.dto.RepairStatus;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 
 public interface RepairJobDAO extends CrudDAO<RepairJob> {
 

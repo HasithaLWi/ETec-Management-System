@@ -1,11 +1,10 @@
 package lk.ijse.etecmanagementsystem.dao.custom.impl;
 
 import lk.ijse.etecmanagementsystem.dao.custom.CustomerDAO;
-import lk.ijse.etecmanagementsystem.db.DBConnection;
 import lk.ijse.etecmanagementsystem.dto.CustomerDTO;
 import lk.ijse.etecmanagementsystem.dao.CrudUtil;
 import lk.ijse.etecmanagementsystem.entity.Customer;
-import lk.ijse.etecmanagementsystem.util.GenerateReports;
+import lk.ijse.etecmanagementsystem.util.reports.GenerateReports;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@
 //
 //import javafx.collections.ObservableList;
 //import lk.ijse.etecmanagementsystem.dto.ProductDTO;
-//import lk.ijse.etecmanagementsystem.util.ProductCondition;
+//import lk.ijse.etecmanagementsystem.dto.ProductCondition;
 //import lk.ijse.etecmanagementsystem.util.ProductUtil;
 //
 //import java.util.ArrayList;
@@ -10,7 +10,7 @@
 //import java.util.List;
 //import java.util.stream.Collectors;
 //
-//import static lk.ijse.etecmanagementsystem.util.ProductCondition.*;
+//import static lk.ijse.etecmanagementsystem.dto.ProductCondition.*;
 //
 //public class InventoryUtil {
 //
@@ -78,7 +78,9 @@
 package lk.ijse.etecmanagementsystem.util;
 
 import javafx.collections.ObservableList;
+import lk.ijse.etecmanagementsystem.dto.ProductCondition;
 import lk.ijse.etecmanagementsystem.dto.ProductDTO;
+import lk.ijse.etecmanagementsystem.dto.Stock;
 
 import java.util.List;
 import java.util.stream.Collectors;

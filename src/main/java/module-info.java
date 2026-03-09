@@ -12,7 +12,6 @@ module lk.ijse.etecmanagementsystem {
     requires jdk.httpserver;
     requires net.sf.jasperreports.core;
     requires java.mail;
-    requires lk.ijse.etecmanagementsystem;
 
 
     exports lk.ijse.etecmanagementsystem;
@@ -24,12 +23,16 @@ module lk.ijse.etecmanagementsystem {
     exports lk.ijse.etecmanagementsystem.util;
     opens lk.ijse.etecmanagementsystem.util to javafx.fxml;
 
-    opens lk.ijse.etecmanagementsystem.dto to java.base;
     exports lk.ijse.etecmanagementsystem.dto;
 
-    opens lk.ijse.etecmanagementsystem.dto.tm to java.base;
     exports lk.ijse.etecmanagementsystem.dto.tm;
     opens lk.ijse.etecmanagementsystem.dao to javafx.fxml;
     exports lk.ijse.etecmanagementsystem.dao;
+    opens lk.ijse.etecmanagementsystem.dto to java.base, javafx.fxml;
+    exports lk.ijse.etecmanagementsystem.util.emailservice;
+    opens lk.ijse.etecmanagementsystem.util.emailservice to javafx.fxml;
+    exports lk.ijse.etecmanagementsystem.util.reports;
+    opens lk.ijse.etecmanagementsystem.util.reports to javafx.fxml;
+    opens lk.ijse.etecmanagementsystem.dto.tm to java.base, javafx.fxml;
 
 }

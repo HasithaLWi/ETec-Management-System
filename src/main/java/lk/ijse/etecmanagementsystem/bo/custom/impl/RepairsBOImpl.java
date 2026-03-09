@@ -1,11 +1,8 @@
 package lk.ijse.etecmanagementsystem.bo.custom.impl;
 
-import lk.ijse.etecmanagementsystem.bo.BOFactory;
-import lk.ijse.etecmanagementsystem.bo.custom.InventoryBO;
 import lk.ijse.etecmanagementsystem.bo.custom.RepairsBO;
-import lk.ijse.etecmanagementsystem.dao.CrudUtil;
-import lk.ijse.etecmanagementsystem.dao.custom.QueryDAO;
-import lk.ijse.etecmanagementsystem.dao.custom.RepairItemDAO;
+import lk.ijse.etecmanagementsystem.dao.DAOFactory;
+import lk.ijse.etecmanagementsystem.dao.custom.*;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.*;
 import lk.ijse.etecmanagementsystem.dto.CustomDTO;
 import lk.ijse.etecmanagementsystem.dto.ProductItemDTO;
@@ -15,28 +12,24 @@ import lk.ijse.etecmanagementsystem.entity.Sales;
 import lk.ijse.etecmanagementsystem.entity.TransactionRecord;
 import lk.ijse.etecmanagementsystem.db.DBConnection;
 import lk.ijse.etecmanagementsystem.dto.RepairJobDTO;
-import lk.ijse.etecmanagementsystem.dto.SalesDTO;
 import lk.ijse.etecmanagementsystem.dto.tm.RepairPartTM;
-import lk.ijse.etecmanagementsystem.util.LoginUtil;
-import lk.ijse.etecmanagementsystem.util.PaymentStatus;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
+import lk.ijse.etecmanagementsystem.dto.PaymentStatus;
+import lk.ijse.etecmanagementsystem.dto.RepairStatus;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static lk.ijse.etecmanagementsystem.controller.RepairDashboardController.getRepairPartTMS;
 
 public class RepairsBOImpl implements RepairsBO {
-    RepairJobDAOImpl repairJobDAO = new RepairJobDAOImpl();
-    QueryDAO queryDAO = new QueryDAOImpl();
-    RepairItemDAO repairItemDAO = new RepairItemDAOImpl();
-    ProductItemDAOImpl productItemDAO = new ProductItemDAOImpl();
-    SalesDAOImpl salesDAO = new SalesDAOImpl();
-    TransactionRecordDAOImpl transactionRecordDAO = new TransactionRecordDAOImpl();
+    RepairJobDAO repairJobDAO = (RepairJobDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.REPAIR_JOB);
+    RepairItemDAO repairItemDAO = (RepairItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.REPAIR_ITEM);
+    ProductItemDAO productItemDAO = (ProductItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT_ITEM);
+    SalesDAO salesDAO = (SalesDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SALES);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
+    TransactionRecordDAO transactionRecordDAO = (TransactionRecordDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.TRANSACTION_RECORD);
 
 
     public List<RepairJobDTO> getAllRepairJobs() throws SQLException {
@@ -281,7 +274,7 @@ public class RepairsBOImpl implements RepairsBO {
                 }
             }
 
-            boolean transactionRecorded = transactionRecordDAO.insertTransactionRecord(new TransactionRecord(
+            boolean transactionRecorded = transactionRecordDAO.save(new TransactionRecord(
                     "REPAIR_PAYMENT",
                     paymentMethod,
                     paidAmount,

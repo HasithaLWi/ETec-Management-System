@@ -1,4 +1,4 @@
-package lk.ijse.etecmanagementsystem.util;
+package lk.ijse.etecmanagementsystem.dto;
 
 
 public enum ProductCondition {

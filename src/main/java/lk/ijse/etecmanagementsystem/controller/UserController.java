@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lk.ijse.etecmanagementsystem.bo.BOFactory;
+import lk.ijse.etecmanagementsystem.bo.custom.UserBO;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.UserDAOImpl;
 import lk.ijse.etecmanagementsystem.dto.UserDTO;
 import lk.ijse.etecmanagementsystem.util.FieldsValidation;
@@ -57,6 +59,7 @@ public class UserController {
 
     private final UserDAOImpl userDAO = new UserDAOImpl();
     private final ObservableList<UserDTO> userObservableList = FXCollections.observableArrayList();
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
 
     @FXML
     public void initialize() {
@@ -102,7 +105,7 @@ public class UserController {
                     cmbRole.getValue()
             );
 
-            boolean isSaved = userDAO.saveUser(user);
+            boolean isSaved = userBO.saveUser(user);
             if (isSaved) {
                 showAlert(Alert.AlertType.INFORMATION, "User Saved Successfully!");
                 handleReset();
@@ -139,7 +142,7 @@ public class UserController {
                     cmbRole.getValue()
             );
 
-            boolean isUpdated = userDAO.updateUser(user);
+            boolean isUpdated = userBO.updateUser(user);
             if (isUpdated) {
                 showAlert(Alert.AlertType.INFORMATION, "User Updated Successfully!");
                 handleReset();
@@ -164,7 +167,7 @@ public class UserController {
         if (result.isPresent() && result.get() == ButtonType.YES) {
             try {
                 int id = Integer.parseInt(txtId.getText().trim());
-                boolean isDeleted = userDAO.deleteUser(id);
+                boolean isDeleted = userBO.deleteUser(id);
                 if (isDeleted) {
                     showAlert(Alert.AlertType.INFORMATION, "User Deleted Successfully!");
                     handleReset();
@@ -197,7 +200,7 @@ public class UserController {
 
     private void loadUsers() {
         try {
-            List<UserDTO> rawData = userDAO.getAllUsers();
+            List<UserDTO> rawData = userBO.getAllUsers();
             userObservableList.clear();
             if (rawData != null) {
                 userObservableList.addAll(rawData);

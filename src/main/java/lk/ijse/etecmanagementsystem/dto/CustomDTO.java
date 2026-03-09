@@ -1,10 +1,5 @@
 package lk.ijse.etecmanagementsystem.dto;
 
-import lk.ijse.etecmanagementsystem.util.PaymentStatus;
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
-import lk.ijse.etecmanagementsystem.util.TransactionFlow;
-
 import java.sql.Date;
 
 public class CustomDTO {

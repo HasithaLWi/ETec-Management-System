@@ -1,18 +1,20 @@
 package lk.ijse.etecmanagementsystem.bo.custom.impl;
 
 import lk.ijse.etecmanagementsystem.bo.custom.ReportBO;
+import lk.ijse.etecmanagementsystem.dao.DAOFactory;
+import lk.ijse.etecmanagementsystem.dao.custom.*;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class ReportBOImpl implements ReportBO {
-    ProductDAOImpl productDAO = new ProductDAOImpl();
-    SalesDAOImpl salesDAO = new SalesDAOImpl();
-    RepairJobDAOImpl repairJobDAO = new RepairJobDAOImpl();
-    TransactionRecordDAOImpl transactionRecordDAO = new TransactionRecordDAOImpl();
-    SupplierDAOImpl supplierDAO = new SupplierDAOImpl();
-    CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+    CustomerDAO customerDAO = (CustomerDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
+    RepairJobDAO repairJobDAO = (RepairJobDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.REPAIR_JOB);
+    SupplierDAO supplierDAO = (SupplierDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SUPPLIER);
+    SalesDAO salesDAO = (SalesDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SALES);
+    TransactionRecordDAO transactionRecordDAO = (TransactionRecordDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.TRANSACTION_RECORD);
+    ProductDAO productDAO = (ProductDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT);
 
     @Override
     public int getSalesCount(LocalDate from, LocalDate to) throws SQLException {

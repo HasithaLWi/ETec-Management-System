@@ -25,9 +25,9 @@ import lk.ijse.etecmanagementsystem.dao.custom.impl.ProductDAOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.ProductItemDAOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.etecmanagementsystem.dto.*;
+import lk.ijse.etecmanagementsystem.dto.tm.InventoryItemTM;
 import lk.ijse.etecmanagementsystem.dto.tm.ItemCartTM;
-import lk.ijse.etecmanagementsystem.entity.ProductItem;
-import lk.ijse.etecmanagementsystem.server.BarcodeServer;
+import lk.ijse.etecmanagementsystem.util.barcodescanner.BarcodeServer;
 import lk.ijse.etecmanagementsystem.util.*;
 
 import java.io.IOException;
@@ -49,19 +49,19 @@ public class SalesController implements Initializable {
     private ToggleButton tglBtnScan;
 
     @FXML
-    private TableView<InventoryItemDTO> tblProductInventory;
+    private TableView<InventoryItemTM> tblProductInventory;
     @FXML
-    private TableColumn<InventoryItemDTO, Integer> colItemId;
+    private TableColumn<InventoryItemTM, Integer> colItemId;
     @FXML
-    private TableColumn<InventoryItemDTO, String> colItemName;
+    private TableColumn<InventoryItemTM, String> colItemName;
     @FXML
-    private TableColumn<InventoryItemDTO, String> colSerial;
+    private TableColumn<InventoryItemTM, String> colSerial;
     @FXML
-    private TableColumn<InventoryItemDTO, Double> colPrice;
+    private TableColumn<InventoryItemTM, Double> colPrice;
     @FXML
-    private TableColumn<InventoryItemDTO, Integer> colWarranty;
+    private TableColumn<InventoryItemTM, Integer> colWarranty;
     @FXML
-    private TableColumn<InventoryItemDTO, ProductCondition> colCondition;
+    private TableColumn<InventoryItemTM, ProductCondition> colCondition;
 
     @FXML
     private Button btnAddToCart;
@@ -142,7 +142,7 @@ public class SalesController implements Initializable {
 
     public HashMap<String, String> customerMap = new HashMap<>();
     private List<CustomerDTO> customerList = new ArrayList<>();
-    private final ObservableList<InventoryItemDTO> inventoryItemsList = FXCollections.observableArrayList();
+    private final ObservableList<InventoryItemTM> inventoryItemsList = FXCollections.observableArrayList();
     private final ObservableList<ItemCartTM> cartItemList = FXCollections.observableArrayList();
     private final ObservableList<ProductDTO> productsList = FXCollections.observableArrayList();
 
@@ -257,7 +257,7 @@ public class SalesController implements Initializable {
 
     @FXML
     private void handleProductTableClick() {
-        InventoryItemDTO selectedItem = tblProductInventory.getSelectionModel().getSelectedItem();
+        InventoryItemTM selectedItem = tblProductInventory.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             populateItemFields(selectedItem);
         }
@@ -298,7 +298,7 @@ public class SalesController implements Initializable {
         if (qty <= 0) qty = 1; // Fallback to 1 if user entered 0 or invalid
 
         String conditionText = cmbCondition.getValue() == null ? "N/A" : cmbCondition.getValue().toString();
-        InventoryItemDTO selectedInventoryItem = tblProductInventory.getSelectionModel().getSelectedItem();
+        InventoryItemTM selectedInventoryItem = tblProductInventory.getSelectionModel().getSelectedItem();
 
         // Validation: Serial Number with Quantity > 1
         if (serialNumber.isEmpty() && qty > 1) {
@@ -380,7 +380,7 @@ public class SalesController implements Initializable {
                 addFieldItemToCart(newCartItem);
             }
         } else {
-            InventoryItemDTO itemBySerial = getItemBySerialNumber(serialNumber);
+            InventoryItemTM itemBySerial = getItemBySerialNumber(serialNumber);
             if(!serialNumber.isEmpty() && itemBySerial != null){
                 newCartItem.setItemId(itemBySerial.getItemId());
                 addFieldItemToCart(newCartItem);
@@ -776,10 +776,10 @@ public class SalesController implements Initializable {
     private void loadProductItems() {
         try {
             inventoryItemsList.clear();
-            List<InventoryItemDTO> itemsFromDB = new ArrayList<>();
+            List<InventoryItemTM> itemsFromDB = new ArrayList<>();
             List<CustomDTO> customItems = inventoryBO.getAllAvailableRealItems();
             for (CustomDTO c : customItems) {
-                InventoryItemDTO item = new InventoryItemDTO(
+                InventoryItemTM item = new InventoryItemTM(
                         c.getInventoryItemId(),
                         c.getInventoryProductName(),
                         c.getInventorySerialNumber(),
@@ -902,8 +902,8 @@ public class SalesController implements Initializable {
         });
     }
 
-    private InventoryItemDTO getItemBySerialNumber(String serialNumber) {
-        InventoryItemDTO item = inventoryItemsList.stream()
+    private InventoryItemTM getItemBySerialNumber(String serialNumber) {
+        InventoryItemTM item = inventoryItemsList.stream()
                 .filter(i -> i.getSerialNumber().equalsIgnoreCase(serialNumber))
                 .findFirst().orElse(null);
         if (item != null) {
@@ -920,7 +920,7 @@ public class SalesController implements Initializable {
                 .filter(p -> p.getName().equalsIgnoreCase(productName))
                 .findFirst().orElse(null);
         if (product != null) {
-            populateItemFields(new InventoryItemDTO(product.getName(), product.getCondition(), product.getWarrantyMonth(), product.getSellPrice()));
+            populateItemFields(new InventoryItemTM(product.getName(), product.getCondition(), product.getWarrantyMonth(), product.getSellPrice()));
         } else {
             showAlert(Alert.AlertType.WARNING, "No product found with name: " + productName);
         }
@@ -935,7 +935,7 @@ public class SalesController implements Initializable {
         }
     }
 
-    private void populateItemFields(InventoryItemDTO item) {
+    private void populateItemFields(InventoryItemTM item) {
         txtPrice.setText(String.valueOf(item.getItemPrice()));
         txtIProductName.setText(item.getProductName() == null ? "" : item.getProductName());
         txtSerialNumber.setText(item.getSerialNumber() == null ? "" : item.getSerialNumber());
@@ -1053,7 +1053,7 @@ public class SalesController implements Initializable {
 
     public void getFilteredProducts(String searchText) {
         String search = (searchText == null) ? "" : searchText.toLowerCase();
-        List<InventoryItemDTO> filtered = inventoryItemsList.stream()
+        List<InventoryItemTM> filtered = inventoryItemsList.stream()
                 .filter(p -> p.getProductName().toLowerCase().contains(search))
                 .collect(Collectors.toList());
         tblProductInventory.setItems(FXCollections.observableArrayList(filtered));

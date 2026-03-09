@@ -1,4 +1,4 @@
-package lk.ijse.etecmanagementsystem.util;
+package lk.ijse.etecmanagementsystem.dto;
 
 public enum PaymentStatus {
     PENDING("PENDING"), PARTIAL("PARTIAL"), PAID("PAID");

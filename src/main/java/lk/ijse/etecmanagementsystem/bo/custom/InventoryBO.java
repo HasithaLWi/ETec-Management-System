@@ -1,12 +1,8 @@
 package lk.ijse.etecmanagementsystem.bo.custom;
 
 import lk.ijse.etecmanagementsystem.bo.SuperBO;
-import lk.ijse.etecmanagementsystem.bo.custom.impl.InventoryBOImpl;
-import lk.ijse.etecmanagementsystem.dao.CrudUtil;
 import lk.ijse.etecmanagementsystem.dto.*;
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

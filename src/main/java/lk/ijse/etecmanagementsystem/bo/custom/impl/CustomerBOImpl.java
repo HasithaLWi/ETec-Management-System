@@ -1,6 +1,7 @@
 package lk.ijse.etecmanagementsystem.bo.custom.impl;
 
 import lk.ijse.etecmanagementsystem.bo.custom.CustomerBO;
+import lk.ijse.etecmanagementsystem.dao.DAOFactory;
 import lk.ijse.etecmanagementsystem.dao.custom.CustomerDAO;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.etecmanagementsystem.dto.CustomerDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class CustomerBOImpl implements CustomerBO {
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
 
     @Override
     public List<CustomerDTO> getAllCustomers() throws SQLException {

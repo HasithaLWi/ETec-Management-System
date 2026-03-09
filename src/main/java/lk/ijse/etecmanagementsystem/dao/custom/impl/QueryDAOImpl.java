@@ -2,18 +2,11 @@ package lk.ijse.etecmanagementsystem.dao.custom.impl;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
 import lk.ijse.etecmanagementsystem.dao.custom.QueryDAO;
-import lk.ijse.etecmanagementsystem.db.DBConnection;
 import lk.ijse.etecmanagementsystem.dto.CustomDTO;
-import lk.ijse.etecmanagementsystem.dto.InventoryItemDTO;
-import lk.ijse.etecmanagementsystem.dto.ProductItemDTO;
-import lk.ijse.etecmanagementsystem.dto.tm.*;
 import lk.ijse.etecmanagementsystem.dao.CrudUtil;
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
+import lk.ijse.etecmanagementsystem.dto.ProductCondition;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;

@@ -14,11 +14,13 @@ import lk.ijse.etecmanagementsystem.App;
 import lk.ijse.etecmanagementsystem.bo.BOFactory;
 import lk.ijse.etecmanagementsystem.bo.custom.RepairsBO;
 import lk.ijse.etecmanagementsystem.bo.custom.SalesBO;
+import lk.ijse.etecmanagementsystem.bo.custom.TransactionBO;
 import lk.ijse.etecmanagementsystem.bo.custom.impl.TransactionBOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.SalesDAOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.TransactionRecordDAOImpl;
 import lk.ijse.etecmanagementsystem.dto.CustomDTO;
+import lk.ijse.etecmanagementsystem.dto.TransactionDTO;
 import lk.ijse.etecmanagementsystem.dto.tm.PendingRepairTM;
 import lk.ijse.etecmanagementsystem.dto.tm.PendingSaleTM;
 import lk.ijse.etecmanagementsystem.dto.tm.SalesTM;
@@ -77,11 +79,8 @@ public class TransactionsController {
     @FXML
     private TableColumn<PendingRepairTM, Void> colRepairAction;
 
-    // --- Model Instance ---
-    TransactionRecordDAOImpl transactionRecordDAO = new TransactionRecordDAOImpl();
-    SalesDAOImpl salesDAO = new SalesDAOImpl();
-    QueryDAOImpl queryDAO = new QueryDAOImpl();
-    TransactionBOImpl transactionBO = new TransactionBOImpl();
+    // --- Business Objects ---
+    TransactionBO transactionBO = (TransactionBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.TRANSACTION);
     SalesBO salesBO = (SalesBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SALES);
     RepairsBO repairsBO = (RepairsBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.REPAIRS);
 
@@ -128,7 +127,22 @@ public class TransactionsController {
         try {
             Date fromD = Date.valueOf(dpFromDate.getValue());
             Date toD = Date.valueOf(dpToDate.getValue());
-            List<TransactionTM> list = transactionRecordDAO.getAllTransactions(fromD, toD);
+            List<TransactionDTO> rawList = transactionBO.getAllTransactions(fromD, toD);
+            List<TransactionTM> list = new ArrayList<>();
+            for (TransactionDTO dto : rawList) {
+                list.add(new TransactionTM(
+                        Integer.parseInt(dto.getTransactionId()),
+                        dto.getTransactionDate(),
+                        dto.getTransactionType(),
+                        dto.getReferenceNote(),
+                        dto.getFlow(),
+                        dto.getAmount(),
+                        dto.getUserName()
+                ));
+            }
+
+            System.out.println(list);
+
             tblHistory.setItems(FXCollections.observableArrayList(list));
             handleComboTypeFilter();
             handleSearchHistory();
@@ -223,7 +237,7 @@ public class TransactionsController {
 
     private void loadDashboardData() {
         try {
-            double[] stats = transactionRecordDAO.getDashboardStats(Date.valueOf(dpFromDate.getValue()), Date.valueOf(dpToDate.getValue()));
+            double[] stats = transactionBO.getDashboardStats(Date.valueOf(dpFromDate.getValue()), Date.valueOf(dpToDate.getValue()));
             double in = stats[0];
             double out = stats[1];
             double net = in - out;
@@ -276,7 +290,7 @@ public class TransactionsController {
     private void saveManualTransaction(String type, double amount, String method, String note) {
         try {
             // Call Model
-            boolean success = transactionRecordDAO.saveManualTransaction(type, amount, method, note, LoginUtil.getUserId()); // User ID 1
+            boolean success = transactionBO.saveManualTransaction(type, amount, method, note, LoginUtil.getUserId()); // User ID 1
             if (success) {
                 new Alert(Alert.AlertType.INFORMATION, "Transaction Saved!").show();
                 loadDashboardData();

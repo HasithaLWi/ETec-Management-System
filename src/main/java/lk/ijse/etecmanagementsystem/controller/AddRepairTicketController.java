@@ -18,7 +18,7 @@ import lk.ijse.etecmanagementsystem.db.DBConnection;
 import lk.ijse.etecmanagementsystem.dto.CustomerDTO;
 import lk.ijse.etecmanagementsystem.dto.RepairJobDTO;
 import lk.ijse.etecmanagementsystem.util.LoginUtil;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
+import lk.ijse.etecmanagementsystem.dto.RepairStatus;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;

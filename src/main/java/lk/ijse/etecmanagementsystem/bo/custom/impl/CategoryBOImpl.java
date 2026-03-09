@@ -1,6 +1,7 @@
 package lk.ijse.etecmanagementsystem.bo.custom.impl;
 
 import lk.ijse.etecmanagementsystem.bo.custom.CategoryBO;
+import lk.ijse.etecmanagementsystem.dao.DAOFactory;
 import lk.ijse.etecmanagementsystem.dao.custom.CategoryDAO;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.CategoryDAOImpl;
 import lk.ijse.etecmanagementsystem.entity.Category;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryBOImpl implements CategoryBO {
-    CategoryDAO categoryDAO = new CategoryDAOImpl();
+    CategoryDAO categoryDAO = (CategoryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CATEGORY);
 
     @Override
     public List<String> getAllCategories() throws SQLException {

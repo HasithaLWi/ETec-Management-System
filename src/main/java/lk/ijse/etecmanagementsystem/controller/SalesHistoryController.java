@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.etecmanagementsystem.bo.BOFactory;
 import lk.ijse.etecmanagementsystem.bo.custom.CustomerBO;
 import lk.ijse.etecmanagementsystem.bo.custom.SalesBO;
+import lk.ijse.etecmanagementsystem.bo.custom.UserBO;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.SalesDAOImpl;
@@ -65,6 +66,7 @@ public class SalesHistoryController {
     UserDAOImpl userDAO = new UserDAOImpl();
     CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
     SalesBO salesBO = (SalesBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SALES);
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
 
 
     @FXML
@@ -97,7 +99,7 @@ public class SalesHistoryController {
                     CustomerName = customerBO.getCustomerById(sale.getCustomerId()).getName();
                 }
 
-                UserDTO user = userDAO.getUserById(sale.getUserId());
+                UserDTO user = userBO.getUserById(sale.getUserId());
                 sales.add(new SalesTM(
                         sale.getSaleId(),
                         CustomerName,

@@ -3,7 +3,7 @@ package lk.ijse.etecmanagementsystem.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CrudDAO<T> {
+public interface CrudDAO<T> extends SuperDAO{
 
     List<T> getAll() throws SQLException;
 

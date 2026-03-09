@@ -1,8 +1,5 @@
 package lk.ijse.etecmanagementsystem.dto;
 
-import lk.ijse.etecmanagementsystem.util.PaymentStatus;
-
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class SalesDTO {

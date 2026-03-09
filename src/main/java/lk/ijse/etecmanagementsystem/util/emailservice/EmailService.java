@@ -1,6 +1,7 @@
-package lk.ijse.etecmanagementsystem.util;
+package lk.ijse.etecmanagementsystem.util.emailservice;
 
 import javafx.scene.control.Alert;
+import lk.ijse.etecmanagementsystem.util.ETecAlerts;
 
 import java.util.Properties;
 import javax.mail.*;

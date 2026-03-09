@@ -2,7 +2,8 @@ package lk.ijse.etecmanagementsystem.bo.custom.impl;
 
 import javafx.scene.chart.XYChart;
 import lk.ijse.etecmanagementsystem.bo.custom.DashboardBO;
-import lk.ijse.etecmanagementsystem.dao.custom.QueryDAO;
+import lk.ijse.etecmanagementsystem.dao.DAOFactory;
+import lk.ijse.etecmanagementsystem.dao.custom.*;
 import lk.ijse.etecmanagementsystem.dao.custom.impl.*;
 import lk.ijse.etecmanagementsystem.dto.CustomDTO;
 
@@ -13,11 +14,11 @@ import java.util.List;
 
 public class DashboardBOImpl implements DashboardBO {
 
-    RepairJobDAOImpl repairDAO = new RepairJobDAOImpl();
-    SalesDAOImpl salesDAO = new SalesDAOImpl();
-    QueryDAO queryDAO = new QueryDAOImpl();
-    TransactionRecordDAOImpl transactionDAO = new TransactionRecordDAOImpl();
-    ProductDAOImpl productDAO = new ProductDAOImpl();
+    RepairJobDAO repairDAO = (RepairJobDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.REPAIR_JOB);
+    SalesDAO salesDAO = (SalesDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SALES);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
+    TransactionRecordDAO transactionDAO = (TransactionRecordDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.TRANSACTION_RECORD);
+    ProductDAO productDAO = (ProductDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT);
 
     @Override
     public CustomDTO getDashboardStats() throws SQLException {

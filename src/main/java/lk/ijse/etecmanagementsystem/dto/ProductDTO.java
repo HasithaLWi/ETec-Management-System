@@ -1,7 +1,5 @@
 package lk.ijse.etecmanagementsystem.dto;
 
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
-
 public class ProductDTO {
     private String id;
     private String name;

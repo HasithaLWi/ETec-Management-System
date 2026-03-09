@@ -4,7 +4,7 @@ import lk.ijse.etecmanagementsystem.bo.SuperBO;
 import lk.ijse.etecmanagementsystem.dto.CustomDTO;
 import lk.ijse.etecmanagementsystem.dto.ProductItemDTO;
 import lk.ijse.etecmanagementsystem.dto.RepairJobDTO;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
+import lk.ijse.etecmanagementsystem.dto.RepairStatus;
 
 import java.sql.SQLException;
 import java.util.List;

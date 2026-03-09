@@ -1,8 +1,5 @@
 package lk.ijse.etecmanagementsystem.dto;
 
-import lk.ijse.etecmanagementsystem.util.PaymentStatus;
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
 import java.util.Date;
 
 public class RepairJobDTO {

@@ -1,4 +1,4 @@
-package lk.ijse.etecmanagementsystem.util;
+package lk.ijse.etecmanagementsystem.dto;
 
 public enum RepairStatus {
     PENDING("PENDING"), DIAGNOSIS("DIAGNOSIS"), WAITING_PARTS("WAITING_PARTS"),

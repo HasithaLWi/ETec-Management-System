@@ -2,9 +2,8 @@ package lk.ijse.etecmanagementsystem.dao.custom.impl;
 
 import lk.ijse.etecmanagementsystem.dao.custom.TransactionRecordDAO;
 import lk.ijse.etecmanagementsystem.entity.TransactionRecord;
-import lk.ijse.etecmanagementsystem.dto.tm.TransactionTM;
 import lk.ijse.etecmanagementsystem.dao.CrudUtil;
-import lk.ijse.etecmanagementsystem.util.GenerateReports;
+import lk.ijse.etecmanagementsystem.util.reports.GenerateReports;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -13,52 +12,36 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TransactionRecordDAOImpl implements TransactionRecordDAO {
-    public boolean insertTransactionRecord(TransactionRecord entity) throws SQLException {
-        String sqlTrans = "";
 
-        if(entity.getTransaction_type().equals("SALE_PAYMENT") || entity.getSale_id() == 0) {
-            sqlTrans = "INSERT INTO TransactionRecord (transaction_type, payment_method, amount, flow, sale_id, user_id, customer_id, reference_note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        }else{
-            sqlTrans = "INSERT INTO TransactionRecord (transaction_type, payment_method, amount, flow, repair_id, user_id, customer_id, reference_note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        }
-        return CrudUtil.execute(sqlTrans,
-                entity.getTransaction_type(),
-                entity.getTransaction_method(),
-                entity.getAmount(),
-                entity.getFlow(),
-                entity.getSale_id() == 0 ? entity.getRepair_id() : entity.getSale_id(),
-                entity.getUser_id(),
-                entity.getCustomer_id() == 0 ? null : entity.getCustomer_id(),
-                entity.getReference_note()
-        );
-    }
-
-    public List<TransactionTM> getAllTransactions(Date dpFromDate, Date dpToDate) throws SQLException {
-        List<TransactionTM> list = new java.util.ArrayList<>();
-        String sql = "SELECT t.*, u.user_name FROM TransactionRecord t JOIN User u ON t.user_id = u.user_id WHERE DATE(t.transaction_date) BETWEEN ? AND ?";
+    @Override
+    public List<TransactionRecord> getAllTransactions(Date dpFromDate, Date dpToDate) throws SQLException {
+        List<TransactionRecord> list = new java.util.ArrayList<>();
+        String sql = "SELECT * FROM TransactionRecord  WHERE DATE(transaction_date) BETWEEN ? AND ?";
 
         ResultSet rs = CrudUtil.execute(sql, dpFromDate, dpToDate);
         while (rs.next()) {
-            list.add(new TransactionTM(
+            list.add(new TransactionRecord(
                     rs.getInt("transaction_id"),
+                    rs.getInt("user_id"),
                     rs.getString("transaction_date"),
                     rs.getString("transaction_type"),
                     rs.getString("reference_note"),
                     rs.getString("flow"),
-                    rs.getDouble("amount"),
-                    rs.getString("user_name")
+                    rs.getDouble("amount")
             ));
         }
         rs.close();
         return list;
     }
 
+    @Override
     public boolean saveManualTransaction(String type, double amount, String method, String note, int userId) throws SQLException {
         String flow = (type.equals("EXPENSE") || type.equals("SUPPLIER_PAYMENT")) ? "OUT" : "IN";
         String sql = "INSERT INTO TransactionRecord (transaction_type, payment_method, amount, flow, user_id, reference_note) VALUES (?, ?, ?, ?, ?, ?)";
         return CrudUtil.execute(sql, type, method, amount, flow, userId, note);
     }
 
+    @Override
     public double[] getDashboardStats(Date fromDate, Date toDate) throws SQLException {
         String sql = "SELECT " +
                 "SUM(CASE WHEN flow = 'IN' THEN amount ELSE 0 END) as total_in, " +
@@ -77,6 +60,7 @@ public class TransactionRecordDAOImpl implements TransactionRecordDAO {
         return newDoubleArray;
     }
 
+    @Override
     public boolean settleTransaction(TransactionRecord entity, String type) throws SQLException {
         String insertTrans = "INSERT INTO TransactionRecord (transaction_type, payment_method, amount, flow, " +
                 (type.equals("SALE") ? "sale_id" : "repair_id") + ", user_id, reference_note) VALUES (?, 'CASH', ?, 'IN', ?, ?, 'Partial Settlement')";
@@ -98,11 +82,13 @@ public class TransactionRecordDAOImpl implements TransactionRecordDAO {
             }
     }
 
+    @Override
     public int getTransactionCount(LocalDate from, LocalDate to) throws SQLException {
         String sql = "SELECT COUNT(*) FROM TransactionRecord WHERE transaction_date BETWEEN ? AND ?";
         return GenerateReports.getCountByDateRange(sql, from, to);
     }
 
+    @Override
     public double getTodayIncome(LocalDate today) throws SQLException {
         String sql = "SELECT COALESCE(SUM(amount), 0) FROM TransactionRecord WHERE flow='IN' AND DATE(transaction_date) = ?";
         ResultSet rs1 = CrudUtil.execute(sql, today);
@@ -110,5 +96,46 @@ public class TransactionRecordDAOImpl implements TransactionRecordDAO {
         if (rs1.next()) income = rs1.getDouble(1);
         rs1.close();
         return income;
+    }
+
+    @Override
+    public List<TransactionRecord> getAll() throws SQLException {
+        return List.of();
+    }
+
+    @Override
+    public boolean save(TransactionRecord entity) throws SQLException {
+        String sqlTrans = "";
+
+        if(entity.getTransaction_type().equals("SALE_PAYMENT") || entity.getSale_id() == 0) {
+            sqlTrans = "INSERT INTO TransactionRecord (transaction_type, payment_method, amount, flow, sale_id, user_id, customer_id, reference_note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        }else{
+            sqlTrans = "INSERT INTO TransactionRecord (transaction_type, payment_method, amount, flow, repair_id, user_id, customer_id, reference_note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        }
+        return CrudUtil.execute(sqlTrans,
+                entity.getTransaction_type(),
+                entity.getTransaction_method(),
+                entity.getAmount(),
+                entity.getFlow(),
+                entity.getSale_id() == 0 ? entity.getRepair_id() : entity.getSale_id(),
+                entity.getUser_id(),
+                entity.getCustomer_id() == 0 ? null : entity.getCustomer_id(),
+                entity.getReference_note()
+        );
+    }
+
+    @Override
+    public boolean update(TransactionRecord entity) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public TransactionRecord search(int id) throws SQLException {
+        return null;
     }
 }

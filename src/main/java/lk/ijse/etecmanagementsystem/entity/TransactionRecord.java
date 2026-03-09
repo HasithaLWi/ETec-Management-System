@@ -1,12 +1,15 @@
 package lk.ijse.etecmanagementsystem.entity;
 
+import java.util.Date;
+import java.util.List;
+
 public class TransactionRecord {
     int transaction_id;
     int sale_id;
     int repair_id;
     int customer_id;
     int user_id;
-    int transaction_date;
+    String transaction_date;
     String transaction_type;
     String transaction_method;
     double amount;
@@ -16,7 +19,17 @@ public class TransactionRecord {
     public TransactionRecord() {
     }
 
-    public TransactionRecord(int transaction_id, int sale_id, int repair_id, int customer_id, int user_id, int transaction_date, String transaction_type, String transaction_method, double amount, String flow, String reference_note) {
+    public TransactionRecord(int transaction_id, int user_id, String transaction_date, String transaction_type, String reference_note, String flow, double amount) {
+        this.transaction_id = transaction_id;
+        this.user_id = user_id;
+        this.transaction_date = transaction_date;
+        this.transaction_type = transaction_type;
+        this.reference_note = reference_note;
+        this.flow = flow;
+        this.amount = amount;
+    }
+
+    public TransactionRecord(int transaction_id, int sale_id, int repair_id, int customer_id, int user_id, String transaction_date, String transaction_type, String transaction_method, double amount, String flow, String reference_note) {
         this.transaction_id = transaction_id;
         this.sale_id = sale_id;
         this.repair_id = repair_id;
@@ -93,11 +106,11 @@ public class TransactionRecord {
         this.user_id = user_id;
     }
 
-    public int getTransaction_date() {
+    public String getTransaction_date() {
         return transaction_date;
     }
 
-    public void setTransaction_date(int transaction_date) {
+    public void setTransaction_date(String transaction_date) {
         this.transaction_date = transaction_date;
     }
 

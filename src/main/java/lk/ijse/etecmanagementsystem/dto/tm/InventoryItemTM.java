@@ -1,8 +1,8 @@
-package lk.ijse.etecmanagementsystem.dto;
+package lk.ijse.etecmanagementsystem.dto.tm;
 
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
+import lk.ijse.etecmanagementsystem.dto.ProductCondition;
 
-public class InventoryItemDTO {
+public class InventoryItemTM {
 
     private  int itemId;
     private  String itemName;
@@ -14,32 +14,23 @@ public class InventoryItemDTO {
     private  String status;
 
 
-    public InventoryItemDTO() {
+    public InventoryItemTM() {
     }
 
-    public InventoryItemDTO(String productName, ProductCondition productCondition, int customerWarranty, double itemPrice) {
+    public InventoryItemTM(String productName, ProductCondition productCondition, int customerWarranty, double itemPrice) {
         this.productName = productName;
         this.productCondition = productCondition;
         this.customerWarranty = customerWarranty;
         this.itemPrice = itemPrice;
     }
 
-    public InventoryItemDTO(int itemId, String productName, String serialNumber, int customerWarranty, double itemPrice, ProductCondition productCondition) {
+    public InventoryItemTM(int itemId, String productName, String serialNumber, int customerWarranty, double itemPrice, ProductCondition productCondition) {
         this.itemId = itemId;
         this.productName = productName;
         this.serialNumber = serialNumber;
         this.customerWarranty = customerWarranty;
         this.itemPrice = itemPrice;
         this.productCondition = productCondition;
-    }
-
-    public InventoryItemDTO(int itemId, String productName, String serialNumber, int customerWarranty, double itemPrice, String status) {
-        this.itemId = itemId;
-        this.productName = productName;
-        this.serialNumber = serialNumber;
-        this.customerWarranty = customerWarranty;
-        this.itemPrice = itemPrice;
-        this.status = status;
     }
 
     public int getItemId() {

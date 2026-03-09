@@ -1,7 +1,5 @@
 package lk.ijse.etecmanagementsystem.dto;
 
-import lk.ijse.etecmanagementsystem.util.TransactionFlow;
-
 public class TransactionDTO {
 
     private String transactionId;
@@ -9,14 +7,15 @@ public class TransactionDTO {
     private String transactionType;  // 'SALE_PAYMENT', 'REPAIR_PAYMENT', 'SUPPLIER_PAYMENT', 'REFUND', 'EXPENSE'
     private String paymentMethod;  // 'CASH', 'CARD', 'TRANSFER'
     private double amount;
-    private TransactionFlow flow;  // ENUM ('IN', 'OUT')  'IN' for Income, 'OUT' for Expenses/Refunds
+    private String flow;  // ENUM ('IN', 'OUT')  'IN' for Income, 'OUT' for Expenses/Refunds
     private int saleId;
     private int repairId;
     private int customerId;
     private int userId;
     private String referenceNote;
+    private  String userName;
 
-    public TransactionDTO(String transactionId, String transactionDate, String transactionType, String paymentMethod, double amount, TransactionFlow flow, int saleId, int repairId, int customerId, int userId, String referenceNote) {
+    public TransactionDTO(String transactionId, String transactionDate, String transactionType, String paymentMethod, double amount, String flow, int saleId, int repairId, int customerId, int userId, String referenceNote, String userName) {
         this.transactionId = transactionId;
         this.transactionDate = transactionDate;
         this.transactionType = transactionType;
@@ -28,6 +27,15 @@ public class TransactionDTO {
         this.customerId = customerId;
         this.userId = userId;
         this.referenceNote = referenceNote;
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getTransactionId() {
@@ -70,11 +78,11 @@ public class TransactionDTO {
         this.amount = amount;
     }
 
-    public TransactionFlow getFlow() {
+    public String getFlow() {
         return flow;
     }
 
-    public void setFlow(TransactionFlow flow) {
+    public void setFlow(String flow) {
         this.flow = flow;
     }
 

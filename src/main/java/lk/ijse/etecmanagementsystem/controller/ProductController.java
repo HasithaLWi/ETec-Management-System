@@ -22,7 +22,7 @@ import lk.ijse.etecmanagementsystem.util.CategoryScene;
 import lk.ijse.etecmanagementsystem.App;
 import lk.ijse.etecmanagementsystem.dto.ProductDTO;
 import lk.ijse.etecmanagementsystem.util.FieldsValidation;
-import lk.ijse.etecmanagementsystem.util.ProductCondition;
+import lk.ijse.etecmanagementsystem.dto.ProductCondition;
 
 import javafx.scene.input.KeyEvent;
 

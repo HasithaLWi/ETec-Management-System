@@ -4,8 +4,8 @@ import javafx.scene.chart.XYChart;
 import lk.ijse.etecmanagementsystem.dao.custom.RepairJobDAO;
 import lk.ijse.etecmanagementsystem.dao.CrudUtil;
 import lk.ijse.etecmanagementsystem.entity.RepairJob;
-import lk.ijse.etecmanagementsystem.util.GenerateReports;
-import lk.ijse.etecmanagementsystem.util.RepairStatus;
+import lk.ijse.etecmanagementsystem.util.reports.GenerateReports;
+import lk.ijse.etecmanagementsystem.dto.RepairStatus;
 
 import java.sql.*;
 import java.time.LocalDate;

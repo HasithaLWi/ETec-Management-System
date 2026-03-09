@@ -1,8 +1,9 @@
-package lk.ijse.etecmanagementsystem.util;
+package lk.ijse.etecmanagementsystem.util.reports;
 
 import javafx.scene.control.Alert;
 import lk.ijse.etecmanagementsystem.App;
 import lk.ijse.etecmanagementsystem.db.DBConnection;
+import lk.ijse.etecmanagementsystem.util.ETecAlerts;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;

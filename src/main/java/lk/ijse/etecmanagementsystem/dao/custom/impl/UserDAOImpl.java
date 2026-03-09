@@ -3,6 +3,7 @@ package lk.ijse.etecmanagementsystem.dao.custom.impl;
 import lk.ijse.etecmanagementsystem.dao.custom.UserDAO;
 import lk.ijse.etecmanagementsystem.dto.UserDTO;
 import lk.ijse.etecmanagementsystem.dao.CrudUtil;
+import lk.ijse.etecmanagementsystem.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,13 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-    public List<UserDTO> getAllUsers() throws SQLException {
+
+    @Override
+    public List<User> getAll() throws SQLException {
         String sql = "SELECT * FROM User";
-        List<UserDTO> users = new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
         try (ResultSet rs = CrudUtil.execute(sql)) {
             while (rs.next()) {
-                users.add(new UserDTO(
+                users.add(new User(
                         rs.getInt("user_id"),
                         rs.getString("name"),
                         rs.getString("contact"),
@@ -31,13 +34,47 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
-    public UserDTO getUserById(int id) throws SQLException {
+    @Override
+    public boolean save(User entity) throws SQLException {
+        String sql = "INSERT INTO User(name, contact, address, email, user_name, password, role) VALUES(?,?,?,?,?,?,?)";
+        return CrudUtil.execute(sql,
+                entity.getName(),
+                entity.getContact(),
+                entity.getAddress(),
+                entity.getEmail(),
+                entity.getUser_name(),
+                entity.getPassword(),
+                entity.getRole());
+    }
+
+    @Override
+    public boolean update(User entity) throws SQLException {
+        String sql = "UPDATE User SET name=?, contact=?, address=?, email=?, user_name=?, password=?, role=? WHERE user_id=?";
+        return CrudUtil.execute(sql,
+                entity.getName(),
+                entity.getContact(),
+                entity.getAddress(),
+                entity.getEmail(),
+                entity.getUser_name(),
+                entity.getPassword(),
+                entity.getRole(),
+                entity.getUser_id());
+    }
+
+    @Override
+    public boolean delete(int id) throws SQLException {
+        String sql = "DELETE FROM User WHERE user_id=?";
+        return CrudUtil.execute(sql, id);
+    }
+
+    @Override
+    public User search(int id) throws SQLException {
         String sql = "SELECT * FROM User WHERE user_id=?";
-        UserDTO user = null;
+        User user = null;
 
         try (ResultSet rs = CrudUtil.execute(sql, id)) {
             if (rs.next()) {
-                user = new UserDTO(
+                user = new User(
                         rs.getInt("user_id"),
                         rs.getString("name"),
                         rs.getString("contact"),
@@ -52,36 +89,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public boolean saveUser(UserDTO user) throws SQLException {
-        String sql = "INSERT INTO User(name, contact, address, email, user_name, password, role) VALUES(?,?,?,?,?,?,?)";
-        return CrudUtil.execute(sql,
-                user.getName(),
-                user.getContact(),
-                user.getAddress(),
-                user.getEmail(),
-                user.getUserName(),
-                user.getPassword(),
-                user.getRole());
-    }
-
-    public boolean updateUser(UserDTO user) throws SQLException {
-        String sql = "UPDATE User SET name=?, contact=?, address=?, email=?, user_name=?, password=?, role=? WHERE user_id=?";
-        return CrudUtil.execute(sql,
-                user.getName(),
-                user.getContact(),
-                user.getAddress(),
-                user.getEmail(),
-                user.getUserName(),
-                user.getPassword(),
-                user.getRole(),
-                user.getUserId());
-    }
-
-    public boolean deleteUser(int id) throws SQLException {
-        String sql = "DELETE FROM User WHERE user_id=?";
-        return CrudUtil.execute(sql, id);
-    }
-
+    @Override
     public boolean validateCredentials(String username, String password) throws SQLException {
         // Logic to validate credentials against a data source
         String sql = "SELECT * FROM User WHERE BINARY user_name = ? AND BINARY password = ?";
@@ -90,6 +98,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
     public boolean validateUserName(String username) throws SQLException {
         String sql = "SELECT * FROM User WHERE user_name = ?";
         try (ResultSet resultSet = CrudUtil.execute(sql, username)) {
@@ -97,6 +106,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
     public String getUserRole(String username) throws SQLException {
         String sql = "SELECT role FROM User WHERE user_name = ?";
         try (ResultSet resultSet = CrudUtil.execute(sql, username)) {
@@ -108,6 +118,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
     public String getName(String username) throws SQLException {
         String sql = "SELECT name FROM User WHERE user_name = ?";
         try (ResultSet resultSet = CrudUtil.execute(sql, username)) {
@@ -119,6 +130,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
     public int getUserId(String username) throws SQLException {
         String sql = "SELECT user_id FROM User WHERE user_name = ?";
         try (ResultSet resultSet = CrudUtil.execute(sql, username)) {
@@ -130,6 +142,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
     public boolean validateUserEmail(String username, String email) throws SQLException {
         String sql = "SELECT * FROM User WHERE user_name = ? AND email = ?";
         try (ResultSet resultSet = CrudUtil.execute(sql, username, email)) {
@@ -137,6 +150,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
     public String getUserPassword(String username) throws SQLException {
         String sql = "SELECT password FROM User WHERE user_name = ?";
 
