@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.stage.DirectoryChooser;
-import lk.ijse.etecmanagementsystem.util.BackupUtil;
+import lk.ijse.etecmanagementsystem.dbbackup.DatabaseBackup;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class AdminController {
 
         if (selectedDirectory != null) {
 
-            boolean isSuccess = BackupUtil.backupDatabase(
+            boolean isSuccess = DatabaseBackup.backupDatabase(
                     "ETec", // DB Name
                     "root",                 // Username
                     "mysql",                 // Password

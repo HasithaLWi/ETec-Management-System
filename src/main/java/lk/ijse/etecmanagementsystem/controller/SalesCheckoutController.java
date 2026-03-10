@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.etecmanagementsystem.bo.BOFactory;
+import lk.ijse.etecmanagementsystem.bo.custom.SalesBO;
 import lk.ijse.etecmanagementsystem.bo.custom.impl.SalesBOImpl;
 import lk.ijse.etecmanagementsystem.dto.CustomerDTO;
 import lk.ijse.etecmanagementsystem.dto.SalesDTO;
@@ -79,7 +81,7 @@ public class SalesCheckoutController {
     private CustomerDTO customer;
     private SalesController salesControllerInstance;
 
-    SalesBOImpl salesBO = new SalesBOImpl();
+    SalesBO salesBO = (SalesBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.SALES);
 
     @FXML
     public void initialize() {

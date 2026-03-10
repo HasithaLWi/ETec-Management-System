@@ -36,6 +36,7 @@ public class SalesBOImpl implements SalesBO {
     TransactionRecordDAO transactionRecordDAO = (TransactionRecordDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.TRANSACTION_RECORD);
     ProductDAO productDAO = (ProductDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PRODUCT);
 
+    @Override
     public boolean placeOrder(SalesDTO salesDTO, List<ItemCartTM> cartItems) throws SQLException {
         Connection con = null;
         try {
@@ -230,6 +231,7 @@ public class SalesBOImpl implements SalesBO {
         );
     }
 
+    @Override
     public List<SalesDTO> getAllSale() throws SQLException {
         List<SalesDTO> salesList = new ArrayList<>();
 
@@ -251,11 +253,13 @@ public class SalesBOImpl implements SalesBO {
         return salesList;
     }
 
+    @Override
     public List<CustomDTO> getSalesByDateRange(LocalDate from, LocalDate to) throws SQLException {
 
         return queryDAO.getSalesByDateRange(from, to);
     }
 
+    @Override
     public List<CustomDTO> getPendingSales() throws SQLException {
         return queryDAO.getPendingSales();
     }

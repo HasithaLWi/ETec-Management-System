@@ -34,5 +34,7 @@ module lk.ijse.etecmanagementsystem {
     exports lk.ijse.etecmanagementsystem.reports;
     opens lk.ijse.etecmanagementsystem.reports to javafx.fxml;
     opens lk.ijse.etecmanagementsystem.dto.tm to java.base, javafx.fxml;
+    exports lk.ijse.etecmanagementsystem.dbbackup;
+    opens lk.ijse.etecmanagementsystem.dbbackup to javafx.fxml;
 
 }

@@ -1,11 +1,11 @@
-package lk.ijse.etecmanagementsystem.util;
+package lk.ijse.etecmanagementsystem.dbbackup;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BackupUtil {
+public class DatabaseBackup {
 
     public static boolean backupDatabase(String dbName, String dbUser, String dbPass, String path) {
         // 1. Generate a unique filename with a timestamp (e.g., backup_2025-12-31_14-30.sql)
